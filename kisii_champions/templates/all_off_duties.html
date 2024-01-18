@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 20px;">
+    <h2>All Off Duties</h2>
+    <table style="width: 90%; border-collapse: collapse; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th>Staff</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in all_off_duties %}
+          <tr>
+            <td>{{ entry.staff.username }}</td>
+            <td>{{ entry.start_date }}</td>
+            <td>{{ entry.end_date }}</td>
+            <td>{{ entry.holiday }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% if context %}
+    <p>Holiday: {{ context.holiday.name }}</p>
+    <p>Date: {{ context.holiday.date }}</p>
+
+    {% if context.assigned_staff %}
+        <p>Assigned Staff:</p>
+        <ul>
+            {% for staff_member in context.assigned_staff %}
+                <li>{{ staff_member.username }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No staff assigned to this holiday.</p>
+    {% endif %}
+
+    {% if context.remaining_holidays is not None %}
+        <p>Remaining Holidays: {{ context.remaining_holidays }}</p>
+    {% endif %}
+{% endif %}
+

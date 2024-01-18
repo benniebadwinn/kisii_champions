@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  padding: 20px; /* Add padding to the body */
+}
+
+header {
+      background-color: rgb(230, 94, 4);
+      color: #fff;
+      text-align: center;
+      width: 100%;
+      height: 8vh; /* Set header height to 8% of the viewport height */
+      font-size: 10px;
+      margin-bottom: 20px; /* Add margin to separate header and form */
+    }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0; /* Adjust margin */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px; /* Adjust font size for small screens */
+}
+
+th {
+  background-color: rgb(230, 94, 4);
+  color: white;
+}
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+  header {
+    font-size: 18px;
+  }
+
+  th, td {
+    font-size: 12px; /* Further reduce font size for smaller screens */
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Available Pending Off</h1>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Staff Name</th>
+        <th>Date</th>
+        <th>Holiday Off</th>
+        <th>Total Holidays</th>
+        <th>Paid Offs</th>
+        <th>Remaining Holidays</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for holiday_data in holiday_info %}
+        <tr>
+          <!-- OffDuty Entry -->
+          <td>{{ holiday_data.assigned_staff }}</td>
+          <td>
+            {% for off_duty_instance in holiday_data.off_duty_instances %}
+              {{ off_duty_instance.date }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+
+          <!-- Holiday Data -->
+          <td>{{ holiday_data.name }}</td>
+          <!-- <td>{{ holiday_data.date }}</td> -->
+          <!-- <td>{{ holiday_data.assigned_staff }}</td> -->
+          <td>{{ holiday_data.total_holidays_assigned }}</td>
+          <td>{{ holiday_data.total_off_duty_instances }}</td>
+          <td>{{ holiday_data.remaining_holidays }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
+<!-- Add this script at the end of your HTML body -->
+<script>
+  // Logout user after 5 minutes
+  setTimeout(function(){
+      window.location.href = "{% url 'account:logout' %}";
+  }, 5 * 60 * 1000); // 5 minutes in milliseconds
+</script>

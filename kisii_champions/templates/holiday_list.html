@@ -1,0 +1,22 @@
+
+{% for holiday_data in holiday_info %}
+    <p>Holiday: {{ holiday_data.name }}</p>
+    <p>Date: {{ holiday_data.date }}</p>
+
+    {% if holiday_data.assigned_staff %}
+        <p>Assigned Staff:</p>
+        <ul>
+            {% for staff_member in holiday_data.assigned_staff %}
+                <li>{{ staff_member }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No staff assigned to this holiday.</p>
+    {% endif %}
+
+    <p>Total Off-Duty Instances: {{ holiday_data.total_off_duty_instances }}</p>
+    <p>Total Holidays Assigned: {{ holiday_data.total_holidays_assigned }}</p>
+    <p>Remaining Holidays: {{ holiday_data.remaining_holidays }}</p>
+
+    <hr>
+{% endfor %}
